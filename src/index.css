@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+@theme {
+  --color-app-bg: var(--bg-app);
+  --color-app-surface: var(--bg-surface);
+  --color-app-border: var(--border-color);
+  --color-app-text: var(--text-main);
+  --color-app-text-muted: var(--text-muted);
+  --color-app-primary: var(--primary);
+  --color-app-primary-hover: var(--primary-hover);
+  --color-app-accent: var(--accent);
+}
+
+@layer base {
+  :root {
+    /* Default Dark Theme (Orbit) */
+    --bg-app: #09090b;
+    /* zinc-950 */
+    --bg-surface: #18181b;
+    /* zinc-900 */
+    --border-color: #27272a;
+    /* zinc-800 */
+    --text-main: #f4f4f5;
+    /* zinc-100 */
+    --text-muted: #a1a1aa;
+    /* zinc-400 */
+    --primary: #22d3ee;
+    /* cyan-400 */
+    --primary-hover: #06b6d4;
+    /* cyan-500 */
+    --accent: #2563eb;
+    /* blue-600 */
+  }
+
+  :root[data-theme="light"] {
+    /* Light Theme */
+    --bg-app: #f4f4f5;
+    /* zinc-100 */
+    --bg-surface: #ffffff;
+    /* white */
+    --border-color: #e4e4e7;
+    /* zinc-200 */
+    --text-main: #18181b;
+    /* zinc-900 */
+    --text-muted: #71717a;
+    /* zinc-500 */
+    --primary: #0891b2;
+    /* cyan-600 */
+    --primary-hover: #0e7490;
+    /* cyan-700 */
+    --accent: #2563eb;
+    /* blue-600 */
+  }
+
+  body {
+    @apply bg-app-bg text-app-text antialiased transition-colors duration-300;
+  }
+}
