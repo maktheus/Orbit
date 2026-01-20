@@ -52,7 +52,7 @@ brew tap maktheus/homebrew-tap
 brew install --cask orbit
 ```
 
-*Note: feasible after creating `maktheus/homebrew-tap` repo with `Orbit.rb`*
+
 
 #### Manual
 1. Download the latest `.dmg` from [Releases](https://github.com/maktheus/Orbit/releases).
