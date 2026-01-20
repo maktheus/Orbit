@@ -38,7 +38,7 @@ jobs:
         # You can remove this or keep it if you plan to support Linux later
         run: |
           sudo apt-get update
-          sudo apt-get install -y libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
 
       - name: Consult Rust Version
         run: echo "Rust version $(rustc --version)"
