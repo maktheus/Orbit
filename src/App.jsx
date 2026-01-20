@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { invoke } from '@tauri-apps/api/core';
-import { save } from '@tauri-apps/plugin-opener'; // Note: opener doesn't save, we use simple download for now
 import {
   Smartphone,
   Wifi,
@@ -132,8 +131,8 @@ function App() {
         <nav className="space-y-1 flex-1">
           <button
             className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${activeTab === 'adb'
-                ? 'bg-app-primary/10 text-app-primary ring-1 ring-app-primary/20'
-                : 'text-app-text-muted hover:bg-app-bg hover:text-app-text'
+              ? 'bg-app-primary/10 text-app-primary ring-1 ring-app-primary/20'
+              : 'text-app-text-muted hover:bg-app-bg hover:text-app-text'
               }`}
             onClick={() => setActiveTab('adb')}
           >
@@ -142,8 +141,8 @@ function App() {
           </button>
           <button
             className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${activeTab === 'net'
-                ? 'bg-app-primary/10 text-app-primary ring-1 ring-app-primary/20'
-                : 'text-app-text-muted hover:bg-app-bg hover:text-app-text'
+              ? 'bg-app-primary/10 text-app-primary ring-1 ring-app-primary/20'
+              : 'text-app-text-muted hover:bg-app-bg hover:text-app-text'
               }`}
             onClick={() => setActiveTab('net')}
           >
@@ -195,8 +194,8 @@ function App() {
                 onClick={startNetworkScan}
                 disabled={scanning}
                 className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md text-white transition-all shadow-lg shadow-app-primary/20 ${scanning
-                    ? 'bg-app-primary/50 cursor-not-allowed'
-                    : 'bg-app-primary hover:bg-app-primary-hover hover:shadow-app-primary/20'
+                  ? 'bg-app-primary/50 cursor-not-allowed'
+                  : 'bg-app-primary hover:bg-app-primary-hover hover:shadow-app-primary/20'
                   }`}
               >
                 {scanning ? <RefreshCw className="animate-spin" size={16} /> : <Scan size={16} />}
@@ -225,8 +224,8 @@ function App() {
                           <Smartphone size={24} />
                         </div>
                         <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${device.state === 'device'
-                            ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20'
-                            : 'bg-zinc-700/50 text-zinc-400 border border-zinc-700'
+                          ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20'
+                          : 'bg-zinc-700/50 text-zinc-400 border border-zinc-700'
                           }`}>
                           {device.state}
                         </span>
@@ -323,7 +322,7 @@ function App() {
             {logs.length === 0 && <span className="text-zinc-700 italic">{t.ready}</span>}
             {logs.map((log, i) => (
               <div key={i} className={`flex gap-3 ${log.includes('Error') ? 'text-red-400' :
-                  log.includes('success') ? 'text-emerald-400' : 'text-zinc-400'
+                log.includes('success') ? 'text-emerald-400' : 'text-zinc-400'
                 }`}>
                 {log}
               </div>
@@ -356,8 +355,8 @@ function App() {
                   <button
                     onClick={() => setThemeMode('dark')}
                     className={`flex-1 py-1.5 text-xs font-medium rounded-md transition-all ${themeMode === 'dark'
-                        ? 'bg-app-surface text-app-text shadow-sm'
-                        : 'text-app-text-muted hover:text-app-text'
+                      ? 'bg-app-surface text-app-text shadow-sm'
+                      : 'text-app-text-muted hover:text-app-text'
                       }`}
                   >
                     Dark
@@ -365,8 +364,8 @@ function App() {
                   <button
                     onClick={() => setThemeMode('light')}
                     className={`flex-1 py-1.5 text-xs font-medium rounded-md transition-all ${themeMode === 'light'
-                        ? 'bg-app-surface text-app-text shadow-sm'
-                        : 'text-app-text-muted hover:text-app-text'
+                      ? 'bg-app-surface text-app-text shadow-sm'
+                      : 'text-app-text-muted hover:text-app-text'
                       }`}
                   >
                     Light
@@ -390,8 +389,8 @@ function App() {
                       key={lang.code}
                       onClick={() => setLanguage(lang.code)}
                       className={`px-4 py-3 rounded-lg text-sm text-left border transition-all ${language === lang.code
-                          ? 'bg-app-primary/10 border-app-primary/50 text-app-primary'
-                          : 'bg-app-bg border-app-border text-app-text-muted hover:border-app-text-muted/50 hover:text-app-text'
+                        ? 'bg-app-primary/10 border-app-primary/50 text-app-primary'
+                        : 'bg-app-bg border-app-border text-app-text-muted hover:border-app-text-muted/50 hover:text-app-text'
                         }`}
                     >
                       {lang.label}
