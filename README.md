@@ -48,8 +48,7 @@
 
 #### Homebrew (macOS)
 ```bash
-brew tap maktheus/homebrew-tap
-brew install --cask orbit
+brew install --cask maktheus/homebrew-tap/orbit
 ```
 
 
