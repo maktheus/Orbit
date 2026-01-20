@@ -1,13 +1,18 @@
 <div align="center">
   <h1>Orbit</h1>
-  <p>Customize your Android via ADB</p> 
+  <p><strong>Futuristic Android Device Manager</strong></p> 
+  
+  <p>
+    Struggling with ADB commands? Tired of searching for your device IP? <br/>
+    Orbit makes connecting and managing Android devices seamless, fast, and beautiful.
+  </p>
 
   [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-support%20my%20work-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/maktheus)
 </div>
 
-![Orbit Icon](https://raw.githubusercontent.com/user/repo/main/icon.png)
+![Orbit Icon](screenshots/icon.png)
 
-**Orbit** is a futuristic, high-performance desktop application for managing Android devices. Built with **Tauri**, **React**, and **Rust**, it combines a premium UI with powerful ADB capabilities.
+**Orbit** is a high-performance desktop application that solves the pain of Android device management. Built with **Tauri**, **React**, and **Rust**, it eliminates the need for terminal commands by providing a premium, sci-fi inspired interface for network scanning, one-click wireless connections, and screen mirroring.
 
 ## ✨ Features
 
@@ -22,7 +27,7 @@
 
 | Dashboard | Network Scanner | Settings |
 |:---:|:---:|:---:|
-| ![Dashboard](/Users/matheus.uchoa/.gemini/antigravity/brain/b49c8db0-a39f-42eb-bc73-37e94851016a/orbit_real_dashboard_1768879274776.png) | ![Network Scan](/Users/matheus.uchoa/.gemini/antigravity/brain/b49c8db0-a39f-42eb-bc73-37e94851016a/orbit_real_network_1768878807159.png) | ![Settings](/Users/matheus.uchoa/.gemini/antigravity/brain/b49c8db0-a39f-42eb-bc73-37e94851016a/orbit_real_settings_1768878286871.png) |
+| ![Dashboard](screenshots/dashboard.png) | ![Network Scan](screenshots/network_scan.png) | ![Settings](screenshots/settings.png) |
 
 ## 🛠️ Tech Stack
 
