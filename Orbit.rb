@@ -1,5 +1,5 @@
 cask "orbit" do
-  version "0.1.0"
+  version "0.1.1"
   sha256 :no_check
   
   depends_on formula: "scrcpy"
