@@ -2,10 +2,10 @@ cask "orbit" do
   version "0.1.0"
   sha256 :no_check
 
-  url "https://github.com/your-username/orbit/releases/download/v#{version}/Orbit_#{version}_aarch64.dmg"
+  url "https://github.com/maktheus/Orbit/releases/download/v#{version}/Orbit_#{version}_aarch64.dmg"
   name "Orbit"
   desc "Futuristic Android Device Manager"
-  homepage "https://github.com/your-username/orbit"
+  homepage "https://github.com/maktheus/Orbit"
 
   app "Orbit.app"
 

@@ -1,4 +1,9 @@
-# Orbit
+<div align="center">
+  <h1>Orbit</h1>
+  <p>Customize your Android via ADB</p> 
+
+  [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-support%20my%20work-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/maktheus)
+</div>
 
 ![Orbit Icon](https://raw.githubusercontent.com/user/repo/main/icon.png)
 
@@ -34,31 +39,17 @@
 - **Scrcpy** (`brew install scrcpy`)
 - **Nmap** (Optional: `brew install nmap`)
 
-### 📦 Distribution Guide (Homebrew)
+### 📦 Installation
 
-To make **Orbit** installable via `brew install --cask orbit` on any Mac:
+#### Homebrew (macOS)
+```bash
+brew tap maktheus/homebrew-tap
+brew install --cask orbit
+```
 
-1.  **Create a Public GitHub Repository**:
-    Host your code on GitHub/GitLab.
-
-2.  **Create a Release**:
-    - Run `npm run tauri build`.
-    - Upload the `.dmg` file from `src-tauri/target/release/bundle/dmg/` to a GitHub Release.
-
-3.  **Setup a Homebrew Tap**:
-    - Create a new repository named `homebrew-tap`.
-    - Inside it, place the `Orbit.rb` file (you can find it in this project root).
-
-4.  **Update the Cask Formula (`Orbit.rb`)**:
-    - Update `url` to point to your GitHub Release `.dmg` link.
-    - Update `sha256` with the hash of the `.dmg`.
-
-5.  **Install**:
-    Users can now run:
-    ```bash
-    brew tap your-username/tap
-    brew install --cask orbit
-    ```
+#### Manual
+1. Download the latest `.dmg` from [Releases](https://github.com/maktheus/Orbit/releases).
+2. Open and drag to Applications.
 
 ## 🌍 Languages
 

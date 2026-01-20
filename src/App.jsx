@@ -16,7 +16,8 @@ import {
   Globe,
   Moon,
   Sun,
-  Download
+  Download,
+  Coffee
 } from 'lucide-react';
 import { translations } from './i18n';
 import { themes } from './themes';
@@ -408,16 +409,27 @@ function App() {
                 >
                   <Download size={16} /> Export Theme JSON
                 </button>
+                <div className="pt-2 border-t border-app-border">
+                  <a
+                    href="https://www.buymeacoffee.com/maktheus" // Replace with your actual username
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-[#FFDD00] hover:bg-[#FFDD00]/90 text-black font-bold rounded-lg transition-colors"
+                  >
+                    <Coffee size={20} />
+                    Buy me a coffee
+                  </a>
+                </div>
               </div>
-            </div>
 
-            <div className="mt-8 flex justify-end">
-              <button
-                onClick={() => setShowSettings(false)}
-                className="px-4 py-2 bg-app-bg hover:bg-app-border text-app-text rounded-lg text-sm font-medium transition-colors"
-              >
-                {t.close}
-              </button>
+              <div className="mt-8 flex justify-end">
+                <button
+                  onClick={() => setShowSettings(false)}
+                  className="px-4 py-2 bg-app-bg hover:bg-app-border text-app-text rounded-lg text-sm font-medium transition-colors"
+                >
+                  {t.close}
+                </button>
+              </div>
             </div>
           </div>
         </div>
