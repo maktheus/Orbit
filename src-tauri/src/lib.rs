@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::process::Command;
 use std::sync::Mutex;
-use tauri::{AppHandle, Manager, State};
+use tauri::{AppHandle, State};
 
 struct ScrcpyState {
     processes: Mutex<HashMap<String, u32>>,
@@ -22,9 +22,41 @@ pub struct NetworkDevice {
     vendor: String,
 }
 
+fn get_adb_path() -> String {
+    if let Ok(home) = std::env::var("HOME") {
+        #[cfg(target_os = "macos")]
+        let path = format!("{}/Library/Android/sdk/platform-tools/adb", home);
+        #[cfg(target_os = "windows")]
+        let path = format!(
+            "{}\\AppData\\Local\\Android\\Sdk\\platform-tools\\adb.exe",
+            home
+        );
+        #[cfg(target_os = "linux")]
+        let path = format!("{}/Android/Sdk/platform-tools/adb", home);
+
+        if std::path::Path::new(&path).exists() {
+            return path;
+        }
+    }
+    "adb".to_string()
+}
+
+fn get_scrcpy_path() -> String {
+    #[cfg(target_os = "macos")]
+    {
+        if std::path::Path::new("/opt/homebrew/bin/scrcpy").exists() {
+            return "/opt/homebrew/bin/scrcpy".to_string();
+        }
+        if std::path::Path::new("/usr/local/bin/scrcpy").exists() {
+            return "/usr/local/bin/scrcpy".to_string();
+        }
+    }
+    "scrcpy".to_string()
+}
+
 #[tauri::command]
 fn list_adb_devices() -> Result<Vec<Device>, String> {
-    let output = Command::new("adb")
+    let output = Command::new(get_adb_path())
         .args(["devices", "-l"])
         .output()
         .map_err(|e| e.to_string())?;
@@ -158,7 +190,7 @@ fn parse_nmap_output(output: &str) -> Result<Vec<NetworkDevice>, String> {
 
 #[tauri::command]
 async fn adb_connect(ip: String) -> Result<String, String> {
-    let output = Command::new("adb")
+    let output = Command::new(get_adb_path())
         .args(["connect", &ip])
         .output()
         .map_err(|e| e.to_string())?;
@@ -173,7 +205,7 @@ async fn adb_connect(ip: String) -> Result<String, String> {
 
 #[tauri::command]
 async fn adb_pair(ip: String, code: String) -> Result<String, String> {
-    let output = Command::new("adb")
+    let output = Command::new(get_adb_path())
         .args(["pair", &ip, &code])
         .output()
         .map_err(|e| e.to_string())?;
@@ -220,7 +252,7 @@ fn launch_scrcpy(state: State<'_, ScrcpyState>, serial: String, force: bool) -> 
     }
 
     // Launch new
-    let child = Command::new("scrcpy")
+    let child = Command::new(get_scrcpy_path())
         .arg("-s")
         .arg(&serial)
         .arg("--window-title")

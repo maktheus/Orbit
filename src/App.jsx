@@ -35,8 +35,15 @@ function App() {
   const [showSettings, setShowSettings] = useState(false);
 
   // Connection Inputs
+  // Connection Inputs
   const [connectIp, setConnectIp] = useState('');
   const [connectPort, setConnectPort] = useState('5555');
+
+  // Pairing Inputs
+  const [pairIp, setPairIp] = useState('');
+  const [pairPort, setPairPort] = useState('');
+  const [pairCode, setPairCode] = useState('');
+  const [showQr, setShowQr] = useState(false); // Toggle between Code and QR view
 
   const t = translations[language];
 
@@ -95,6 +102,22 @@ function App() {
     }
   };
 
+  const handlePair = async () => {
+    if (!pairIp || !pairPort || !pairCode) {
+      addLog('Please fill in all pairing fields', 'error');
+      return;
+    }
+    const target = `${pairIp}:${pairPort}`;
+    addLog(`Pairing with ${target}...`, 'info');
+    try {
+      const res = await invoke('adb_pair', { ip: target, code: pairCode });
+      addLog(`Pair result: ${res}`, 'success');
+      // optional: auto connect if successful? Usually pairing doesn't auto-connect to the *connect* port.
+    } catch (e) {
+      addLog(`Pairing failed: ${e}`, 'error');
+    }
+  };
+
   const exportTheme = () => {
     const currentTheme = themes[themeMode];
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(currentTheme, null, 2));
@@ -149,6 +172,16 @@ function App() {
           >
             <Wifi size={18} />
             {t.networkScan}
+          </button>
+          <button
+            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${activeTab === 'pair'
+              ? 'bg-app-primary/10 text-app-primary ring-1 ring-app-primary/20'
+              : 'text-app-text-muted hover:bg-app-bg hover:text-app-text'
+              }`}
+            onClick={() => setActiveTab('pair')}
+          >
+            <Scan size={18} />
+            {t.pairing || 'Pairing'}
           </button>
         </nav>
 
@@ -320,6 +353,101 @@ function App() {
                 </div>
               )}
             </>
+          )}
+
+          {activeTab === 'pair' && (
+            <div className="max-w-xl mx-auto space-y-8">
+              <div className="text-center space-y-2">
+                <h3 className="text-xl font-bold text-app-text">Wireless Pairing</h3>
+                <p className="text-app-text-muted text-sm">
+                  Enable <strong>Wireless Debugging</strong> in specific Developer Options,<br />
+                  then select "Pair device with pairing code".
+                </p>
+              </div>
+
+              <div className="bg-app-surface border border-app-border rounded-xl p-6 shadow-sm">
+                <div className="flex justify-center mb-6">
+                  <div className="flex bg-app-bg p-1 rounded-lg border border-app-border">
+                    <button
+                      onClick={() => setShowQr(false)}
+                      className={`px-4 py-1.5 text-xs font-medium rounded-md transition-all ${!showQr
+                        ? 'bg-app-surface text-app-text shadow-sm'
+                        : 'text-app-text-muted hover:text-app-text'
+                        }`}
+                    >
+                      Use Code
+                    </button>
+                    <button
+                      onClick={() => setShowQr(true)}
+                      className={`px-4 py-1.5 text-xs font-medium rounded-md transition-all ${showQr
+                        ? 'bg-app-surface text-app-text shadow-sm'
+                        : 'text-app-text-muted hover:text-app-text'
+                        }`}
+                    >
+                      Use QR Code
+                    </button>
+                  </div>
+                </div>
+
+                {!showQr ? (
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-3 gap-3">
+                      <div className="col-span-2 space-y-1.5">
+                        <label className="text-xs font-medium text-app-text-muted">IP Address</label>
+                        <input
+                          type="text"
+                          placeholder="192.168.1.x"
+                          className="w-full bg-app-bg border border-app-border rounded-lg px-3 py-2 text-sm text-app-text focus:outline-none focus:border-app-primary/50 transition-all font-mono"
+                          value={pairIp}
+                          onChange={e => setPairIp(e.target.value)}
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-medium text-app-text-muted">Port</label>
+                        <input
+                          type="text"
+                          placeholder="30000"
+                          className="w-full bg-app-bg border border-app-border rounded-lg px-3 py-2 text-sm text-app-text focus:outline-none focus:border-app-primary/50 transition-all font-mono"
+                          value={pairPort}
+                          onChange={e => setPairPort(e.target.value)}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-medium text-app-text-muted">Wi-Fi Pairing Code</label>
+                      <input
+                        type="text"
+                        placeholder="123456"
+                        maxLength={6}
+                        className="w-full bg-app-bg border border-app-border rounded-lg px-3 py-2 text-sm text-app-text focus:outline-none focus:border-app-primary/50 transition-all font-mono text-center tracking-widest text-lg"
+                        value={pairCode}
+                        onChange={e => setPairCode(e.target.value)}
+                      />
+                    </div>
+
+                    <button
+                      onClick={handlePair}
+                      disabled={!pairIp || !pairPort || !pairCode}
+                      className="w-full bg-app-primary hover:bg-app-primary-hover text-white py-2.5 rounded-lg text-sm font-medium transition-all shadow-lg shadow-app-primary/20 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none mt-4"
+                    >
+                      Pair Device
+                    </button>
+                  </div>
+                ) : (
+                  <div className="text-center py-10 space-y-4">
+                    <div className="w-48 h-48 bg-white mx-auto rounded-xl flex items-center justify-center">
+                      <Scan size={64} className="text-zinc-300" />
+                    </div>
+                    <p className="text-sm text-app-text-muted max-w-xs mx-auto">
+                      QR Code pairing requires a specialized mDNS server implementation not yet available in this version.
+                      <br /><br />
+                      Please use the <strong>Pairing Code</strong> method for now.
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
           )}
         </div>
 

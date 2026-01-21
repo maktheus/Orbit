@@ -10,7 +10,9 @@
   [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-support%20my%20work-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/maktheus)
 </div>
 
-![Orbit Icon](screenshots/icon.png)
+<div align="center">
+  <img src="screenshots/app-icon.png" width="150" alt="Orbit Icon" />
+</div>
 
 **Orbit** is a high-performance desktop application that solves the pain of Android device management. Built with **Tauri**, **React**, and **Rust**, it eliminates the need for terminal commands by providing a premium, sci-fi inspired interface for network scanning, one-click wireless connections, and screen mirroring.
 
