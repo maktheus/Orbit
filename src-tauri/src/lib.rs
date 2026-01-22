@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::process::Command;
 use std::sync::Mutex;
-use tauri::{AppHandle, State};
+use tauri::State;
 
 struct ScrcpyState {
     processes: Mutex<HashMap<String, u32>>,
@@ -265,12 +265,15 @@ fn launch_scrcpy(state: State<'_, ScrcpyState>, serial: String, force: bool) -> 
     Ok(())
 }
 
+mod pairing;
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
         .manage(ScrcpyState {
             processes: Mutex::new(HashMap::new()),
         })
+        .manage(pairing::PairingState::new())
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_shell::init())
         .invoke_handler(tauri::generate_handler![
@@ -278,7 +281,9 @@ pub fn run() {
             scan_network,
             adb_connect,
             adb_pair,
-            launch_scrcpy
+            launch_scrcpy,
+            pairing::start_qr_pairing,
+            pairing::stop_qr_pairing
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

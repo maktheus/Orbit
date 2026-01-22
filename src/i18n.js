@@ -22,6 +22,10 @@ export const translations = {
         activityLog: "Activity Log",
         ready: "System ready...",
         language: "Language",
+        pairInstructions: "How to pair?",
+        pairStep1: "Go to Developer Options > Wireless Debugging",
+        pairStep2: "Select 'Pair device with pairing code'",
+        pairStep3: "Enter the IP, Port, and 6-digit Code below",
         close: "Close"
     },
     "pt-BR": {
@@ -47,6 +51,10 @@ export const translations = {
         activityLog: "Log de Atividades",
         ready: "Sistema pronto...",
         language: "Idioma",
+        pairInstructions: "Como parear?",
+        pairStep1: "Vá em Opções do Desenvolvedor > Depuração por Wi-Fi",
+        pairStep2: "Selecione 'Parear dispositivo com código de pareamento'",
+        pairStep3: "Insira o IP, Porta e Código de 6 dígitos abaixo",
         close: "Fechar"
     },
     ru: {
@@ -72,6 +80,10 @@ export const translations = {
         activityLog: "Журнал активности",
         ready: "Система готова...",
         language: "Язык",
+        pairInstructions: "Как подключить?",
+        pairStep1: "Настройки разработчика > Отладка по Wi-Fi",
+        pairStep2: "Выберите 'Подключить устройство с кодом подключения'",
+        pairStep3: "Введите IP, Порт и 6-значный код ниже",
         close: "Закрыть"
     },
     "zh-CN": {
@@ -97,6 +109,10 @@ export const translations = {
         activityLog: "活动日志",
         ready: "系统就绪...",
         language: "语言",
+        pairInstructions: "如何配对？",
+        pairStep1: "进入开发者选项 > 无线调试",
+        pairStep2: "选择“使用配对码配对设备”",
+        pairStep3: "在下方输入 IP、端口和 6 位配对码",
         close: "关闭"
     }
 };

@@ -17,7 +17,8 @@ import {
   Moon,
   Sun,
   Download,
-  Coffee
+  Coffee,
+  Info
 } from 'lucide-react';
 import { translations } from './i18n';
 import { themes } from './themes';
@@ -44,6 +45,23 @@ function App() {
   const [pairPort, setPairPort] = useState('');
   const [pairCode, setPairCode] = useState('');
   const [showQr, setShowQr] = useState(false); // Toggle between Code and QR view
+  const [qrData, setQrData] = useState(null);
+
+  useEffect(() => {
+    if (showQr) {
+      setQrData(null);
+      invoke('start_qr_pairing')
+        .then(data => setQrData(data))
+        .catch(e => addLog(`QR Error: ${e}`, 'error'));
+
+      return () => {
+        invoke('stop_qr_pairing').catch(console.error);
+      };
+    } else {
+      invoke('stop_qr_pairing').catch(console.error);
+    }
+  }, [showQr]);
+
 
   const t = translations[language];
 
@@ -400,6 +418,18 @@ function App() {
 
                 {!showQr ? (
                   <div className="space-y-4">
+                    {/* Instructions Accordion */}
+                    <div className="bg-app-bg/50 rounded-lg p-4 border border-app-border/50 text-sm space-y-2">
+                      <h4 className="flex items-center gap-2 font-medium text-app-primary">
+                        <Info size={16} /> {t.pairInstructions}
+                      </h4>
+                      <ol className="list-decimal list-inside space-y-1 text-app-text-muted text-xs ml-1">
+                        <li>{t.pairStep1}</li>
+                        <li>{t.pairStep2}</li>
+                        <li>{t.pairStep3}</li>
+                      </ol>
+                    </div>
+
                     <div className="grid grid-cols-3 gap-3">
                       <div className="col-span-2 space-y-1.5">
                         <label className="text-xs font-medium text-app-text-muted">IP Address</label>
@@ -444,15 +474,36 @@ function App() {
                     </button>
                   </div>
                 ) : (
-                  <div className="text-center py-10 space-y-4">
-                    <div className="w-48 h-48 bg-white mx-auto rounded-xl flex items-center justify-center">
-                      <Scan size={64} className="text-zinc-300" />
-                    </div>
-                    <p className="text-sm text-app-text-muted max-w-xs mx-auto">
-                      QR Code pairing requires a specialized mDNS server implementation not yet available in this version.
-                      <br /><br />
-                      Please use the <strong>Pairing Code</strong> method for now.
-                    </p>
+                  <div className="text-center py-6 space-y-4">
+                    {qrData ? (
+                      <div className="space-y-4">
+                        <div className="bg-white p-4 rounded-xl inline-block shadow-lg">
+                          <div
+                            dangerouslySetInnerHTML={{ __html: qrData.qr_svg }}
+                            style={{ width: '200px', height: '200px' }}
+                          />
+                        </div>
+                        <div className="text-sm font-mono text-app-text bg-app-surface border border-app-border p-3 rounded-lg max-w-sm mx-auto">
+                          <div className="flex justify-between">
+                            <span className="text-app-text-muted">Service:</span>
+                            <span>{qrData.service_name}</span>
+                          </div>
+                          <div className="flex justify-between mt-1">
+                            <span className="text-app-text-muted">Code:</span>
+                            <span className="font-bold text-app-primary">{qrData.password}</span>
+                          </div>
+                        </div>
+                        <p className="text-xs text-app-text-muted">
+                          Scan this with "Wireless Debugging" on your Android device.
+                          <br />Make sure both devices are on the same Wi-Fi.
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="flex flex-col items-center justify-center py-10">
+                        <RefreshCw className="animate-spin mb-4 text-app-primary" size={32} />
+                        <p className="text-sm text-app-text-muted">Starting mDNS Server...</p>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
