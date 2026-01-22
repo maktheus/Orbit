@@ -111,8 +111,17 @@ function App() {
     addLog(`Pairing with ${target}...`, 'info');
     try {
       const res = await invoke('adb_pair', { ip: target, code: pairCode });
-      addLog(`Pair result: ${res}`, 'success');
-      // optional: auto connect if successful? Usually pairing doesn't auto-connect to the *connect* port.
+      addLog(`Pairing successful! Result: ${res}`, 'success');
+
+      // Auto-fill connection details and switch to connection tab
+      setConnectIp(pairIp);
+      // Note: The port for connection is usually different from the pairing port.
+      // We'll leave the port as is (default 5555) or let the user enter it, 
+      // but switching them to the connect screen is helpful.
+
+      addLog(`Switching to Manual Connection for ${pairIp}...`, 'info');
+      setActiveTab('adb');
+
     } catch (e) {
       addLog(`Pairing failed: ${e}`, 'error');
     }
