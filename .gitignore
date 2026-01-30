@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Rust
+target/
+debug/
+*.exe
+*.pdb
+*.rlib
